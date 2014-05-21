@@ -1,7 +1,7 @@
 {
     "author": "Quentin Focheux <qfocheux@work4labs.com>",
     "description": "A Simple Quizz",
-    "name": "w4quizz",
+    "name": "quizz",
     "version": "0.0.1",
     "contributors": [
         "Quentin Focheux <qfocheux@work4labs.com>"
@@ -21,7 +21,8 @@
         "chai": "1.9.1",
         "coffee-script": "1.7.1",
         "mocha": "1.18.x",
-        "sinon": "1.9.1"
+        "sinon": "1.9.1",
+        "sinon-chai": "2.5.0"
     },
     "engines": {
         "node": ">= 0.10.0"

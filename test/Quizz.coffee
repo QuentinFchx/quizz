@@ -1,5 +1,9 @@
 chai = require 'chai'
+sinon = require 'sinon'
+sinonChai = require 'sinon-chai'
+
 chai.should()
+chai.use(sinonChai)
 
 Quizz = require '../src/Quizz.coffee'
 
@@ -8,6 +12,17 @@ describe "Quizz", ->
 
     beforeEach ->
         @q = new Quizz()
+
+    describe '#print', ->
+        it 'should be overridable by a custom function', ->
+            spy = sinon.spy()
+            q = new Quizz null, null, spy
+
+            q.print()
+            spy.should.have.been.called
+
+            q.print "foo"
+            spy.should.have.been.calledWith "foo"
 
     describe '#reward', ->
         it 'should create an entry in the scores object if it does not exist', ->
