@@ -9,7 +9,7 @@ PAUSE_DELAY = 4000
 
 class Quizz
 
-    constructor: (questions_file="./questions/fr/database.txt", scores={}, print) ->
+    constructor: (questions_file="../questions/fr/database.txt", scores={}, print) ->
         @questions = Quizz.loadQuestions questions_file
         @scores = scores
         if print
