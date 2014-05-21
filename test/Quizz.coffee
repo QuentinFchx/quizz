@@ -13,6 +13,12 @@ describe "Quizz", ->
     beforeEach ->
         @q = new Quizz()
 
+    describe '@loadQuestions', ->
+        it 'should load the file given and return an array of questions', ->
+            questions_file = "./questions/fr/database.txt"
+            questions = Quizz.loadQuestions questions_file
+            Array.isArray(questions).should.be.true
+
     describe '#print', ->
         it 'should be overridable by a custom function', ->
             spy = sinon.spy()

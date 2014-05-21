@@ -1,15 +1,18 @@
 require 'coffee-script/register'
 
 fs = require 'fs'
+path = require 'path'
 Question = require './Question'
 
 QUESTION_DELAY = 30000
 HINT1_DELAY = 15000
 PAUSE_DELAY = 4000
 
+ROOT_DIR = path.resolve __dirname, "../"
+
 class Quizz
 
-    constructor: (questions_file="../questions/fr/database.txt", scores={}, print) ->
+    constructor: (questions_file="./questions/fr/database.txt", scores={}, print) ->
         @questions = Quizz.loadQuestions questions_file
         @scores = scores
         if print
@@ -84,8 +87,9 @@ class Quizz
         @clearTimers()
         return
 
-    @loadQuestions: (path)->
-        file = fs.readFileSync path
+    @loadQuestions: (filePath)->
+        _filePath = path.resolve ROOT_DIR, filePath
+        file = fs.readFileSync _filePath
         file.toString().split "\n"
 
 module.exports = Quizz
