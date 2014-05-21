@@ -7,7 +7,7 @@
         "Quentin Focheux <qfocheux@work4labs.com>"
     ],
 
-    "main": "lib/quizz",
+    "main": "lib/Quizz.js",
     "scripts": {
         "build": "coffee --bare --compile --output lib/ src/",
         "prepublish": "coffee --bare --compile --output lib/ src/",
