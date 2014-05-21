@@ -1,4 +1,15 @@
-quizz
-=====
+# Quizz
 
-A small quizz for chat services
+## Install
+
+Add quizz to your *package.json*.
+
+    npm install --save quizz
+
+To instanciate a quizz
+
+    var Quizz = require("quizz")
+    var q = new Quizz()
+
+    q.start()
+    q.stop()
