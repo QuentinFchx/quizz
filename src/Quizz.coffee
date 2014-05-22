@@ -67,7 +67,7 @@ class Quizz
     displayTop: (n) ->
         top = @getTop n
         res = "TOP #{n}"
-        res += "\n#{i+1}. #{s.u}:  #{s.s}" for s, i in top
+        res += "\n#{index+1}. #{entry.user}:  #{entry.score}" for entry, index in top
         @print res
         return
 

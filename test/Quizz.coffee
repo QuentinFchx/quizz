@@ -52,3 +52,17 @@ describe "Quizz", ->
             top[0].user.should.equal "bar"
             top[1].user.should.equal "baz"
             top[2].user.should.equal "foo"
+
+    describe '#displayTop', ->
+        beforeEach ->
+            @q.reward "foo", 30
+            @q.reward "bar", 20
+            @q.reward "baz", 10
+
+        it 'should print the top3', ->
+            @q.print = sinon.spy()
+            @q.displayTop 3
+
+            expected = "TOP 3\n1. foo:  30\n2. bar:  20\n3. baz:  10"
+
+            @q.print.should.have.been.calledWith expected
