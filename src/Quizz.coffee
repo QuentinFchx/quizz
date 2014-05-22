@@ -1,5 +1,3 @@
-require 'coffee-script/register'
-
 fs = require 'fs'
 path = require 'path'
 Question = require './Question'
