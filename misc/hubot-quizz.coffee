@@ -2,7 +2,7 @@
 #   A simple quizz
 #
 # Dependencies:
-#   "quizz": "0.0.3"
+#   "quizz": "0.0.4"
 #
 # Commands:
 #   hubot qstart - Start the quizz
