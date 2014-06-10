@@ -2,6 +2,7 @@ fs = require 'fs'
 path = require 'path'
 Question = require './Question'
 
+MAX_UNANSWERED_QUESTIONS = 3
 QUESTION_DELAY = 30000
 HINT1_DELAY = 15000
 PAUSE_DELAY = 4000
@@ -13,6 +14,8 @@ class Quizz
     constructor: (questions_file="./questions/fr/database.txt", scores={}, print) ->
         @questions = Quizz.loadQuestions questions_file
         @scores = scores
+        @unanswered_questions = 0
+
         if print
             @print = print
         return
@@ -31,6 +34,7 @@ class Quizz
         @print(@current_question.question)
         @qto = setTimeout (=> @timeout()), QUESTION_DELAY
         @h1to = setTimeout (=> @giveHint()), HINT1_DELAY
+        @unanswered_questions += 1
         return
 
     giveHint: (level=1) ->
@@ -38,6 +42,7 @@ class Quizz
         return
 
     check: (answer, user) ->
+        @unanswered_questions = 0
         if @current_question and @current_question.check(answer)
             @print "#{user} found the answer:   #{@current_question.answer}"
             @reward(user, 10)
@@ -48,6 +53,9 @@ class Quizz
 
     timeout: ->
         @print "The answer was: #{@current_question.answer}"
+        if @unanswered_questions > MAX_UNANSWERED_QUESTIONS
+            @stop()
+            return
         @nextQuestion()
         return
 

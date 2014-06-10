@@ -11,7 +11,11 @@ Quizz = require '../src/Quizz.coffee'
 describe "Quizz", ->
 
     beforeEach ->
+        @sinon = sinon.sandbox.create()
         @q = new Quizz()
+
+    afterEach ->
+        @sinon.restore()
 
     describe '@loadQuestions', ->
         it 'should load the file given and return an array of questions', ->
@@ -21,7 +25,7 @@ describe "Quizz", ->
 
     describe '#print', ->
         it 'should be overridable by a custom function', ->
-            spy = sinon.spy()
+            spy = @sinon.spy()
             q = new Quizz null, null, spy
 
             q.print()
@@ -66,3 +70,27 @@ describe "Quizz", ->
             expected = "TOP 3\n1. foo:  30\n2. bar:  20\n3. baz:  10"
 
             @q.print.should.have.been.calledWith expected
+
+    describe '#check', ->
+        it 'should reset the unanswered questions counter', ->
+            @q.unanswered_questions = 1
+            @q.check "foo", "bar"
+            @q.unanswered_questions.should.equal 0
+
+    describe '#timeout', ->
+        it 'should stop the quizz if too many unanswered questions', ->
+            @q.unanswered_questions = 4
+            @sinon.spy @q, "stop"
+
+            @q.ask()
+            @q.timeout()
+
+            @q.stop.should.have.been.called
+
+        it 'should call nextQuestion instead', ->
+            @sinon.spy @q, "nextQuestion"
+
+            @q.ask()
+            @q.timeout()
+
+            @q.nextQuestion.should.have.been.called
