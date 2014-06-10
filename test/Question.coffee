@@ -18,6 +18,10 @@ describe "Question", ->
         it 'should return placeholders for level 1', ->
             @q.hint(1).should.equal "□□□□□□"
 
+        it 'should unveil a third of the word for level 2', ->
+            hint = @q.hint(2)
+            (hint.replace /□/g, "").length.should.equal 2
+
     describe '#check', ->
         it 'should return true if the answer is correct', ->
             @q.check("answer").should.be.true
