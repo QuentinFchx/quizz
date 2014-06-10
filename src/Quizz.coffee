@@ -4,7 +4,8 @@ Question = require './Question'
 
 MAX_UNANSWERED_QUESTIONS = 3
 QUESTION_DELAY = 30000
-HINT1_DELAY = 15000
+HINT1_DELAY = 10000
+HINT2_DELAY = 20000
 PAUSE_DELAY = 4000
 
 ROOT_DIR = path.resolve __dirname, "../"
@@ -33,7 +34,8 @@ class Quizz
         @current_question = @pickQuestion()
         @print(@current_question.question)
         @qto = setTimeout (=> @timeout()), QUESTION_DELAY
-        @h1to = setTimeout (=> @giveHint()), HINT1_DELAY
+        @h1to = setTimeout (=> @giveHint(1)), HINT1_DELAY
+        @h2to = setTimeout (=> @giveHint(2)), HINT2_DELAY
         @unanswered_questions += 1
         return
 
