@@ -46,7 +46,6 @@ class Quizz
         if @current_question and @current_question.check(answer)
             @print "#{user} found the answer:   #{@current_question.answer}"
             @reward(user, 10)
-            @current_question = null
             @clearTimers()
             @nextQuestion()
         return
@@ -64,6 +63,7 @@ class Quizz
         @scores[user] += points
 
     nextQuestion: ->
+        @current_question = null
         @qto = setTimeout (=> @ask()), PAUSE_DELAY
         return
 
