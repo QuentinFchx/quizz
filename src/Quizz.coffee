@@ -6,7 +6,7 @@ MAX_UNANSWERED_QUESTIONS = 3
 QUESTION_DELAY = 30000
 HINT1_DELAY = 10000
 HINT2_DELAY = 20000
-PAUSE_DELAY = 4000
+PAUSE_DELAY = 5000
 
 ROOT_DIR = path.resolve __dirname, "../"
 
@@ -88,6 +88,8 @@ class Quizz
         delete @qto
         clearTimeout @h1to
         delete @h1to
+        clearTimeout @h2to
+        delete @h2to
         return
 
     stop: ->
