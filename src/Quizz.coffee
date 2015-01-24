@@ -69,6 +69,10 @@ class Quizz
         @qto = setTimeout (=> @ask()), PAUSE_DELAY
         return
 
+    skipQuestion: ->
+        @clearTimers()
+        @timeout()
+
     getTop: (n) ->
         ({score: score, user: user} for user, score of @scores).sort((a,b)-> return a.score < b.score)[0..n-1]
 
