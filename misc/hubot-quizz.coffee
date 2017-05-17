@@ -13,7 +13,7 @@
 #   QuentinFchx
 
 
-Quizz = require('quizz')
+Quizz = require('quizz').Quizz
 
 module.exports = (robot) ->
 
@@ -28,7 +28,7 @@ module.exports = (robot) ->
             return
         print = (txt) ->
             msg.send txt
-        quizz = new Quizz(null, robot.brain.data.qscores, print)
+        quizz = new Quizz(undefined, robot.brain.data.qscores, print)
         quizz.start()
 
     robot.respond /qstop$/i, (msg) ->
