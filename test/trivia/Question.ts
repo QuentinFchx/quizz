@@ -1,5 +1,6 @@
-import { Question } from '../src/Question';
 import { expect } from 'chai';
+
+import { Question } from '../../src/trivia/Question';
 
 describe('Question', function () {
     let question: Question;

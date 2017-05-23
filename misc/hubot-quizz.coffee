@@ -13,7 +13,7 @@
 #   QuentinFchx
 
 
-Quizz = require('quizz').Quizz
+GameManager = require('quizz').GameManager
 
 module.exports = (robot) ->
 
@@ -28,7 +28,7 @@ module.exports = (robot) ->
             return
         print = (txt) ->
             msg.send txt
-        quizz = new Quizz(undefined, robot.brain.data.qscores, print)
+        quizz = new GameManager(print, robot.brain.data.qscores)
         quizz.start()
 
     robot.respond /qstop$/i, (msg) ->
@@ -40,4 +40,4 @@ module.exports = (robot) ->
         if quizz then quizz.displayTop 3
 
     robot.hear /(.*)/i, (msg) ->
-        if quizz then quizz.check(msg.match[1], msg.message.user.name)
+        if quizz then quizz.handleMessage(msg.match[1], msg.message.user.name)
