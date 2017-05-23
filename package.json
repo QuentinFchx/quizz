@@ -6,7 +6,7 @@
   "contributors": [
     "Quentin Focheux <qfocheux@work4labs.com>"
   ],
-  "main": "lib/Quizz.js",
+  "main": "lib/GameManager.js",
   "scripts": {
     "build": "tsc",
     "prepublish": "tsc",
