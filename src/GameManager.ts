@@ -1,6 +1,7 @@
 import { AbstractGame } from './AbstractGame';
 
 import { Quizz } from './trivia/Quizz';
+import { Scrabble } from './scrabble/Scrabble';
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
 const PAUSE_DELAY = 5000;
@@ -15,6 +16,7 @@ export class GameManager {
         private scores: { [key: string]: number } = {}
     ) {
         this.registerGame(Quizz.title, new Quizz({ questionsFile: '../questions/fr/database.txt' }));
+        this.registerGame(Scrabble.title, new Scrabble({ dictFile: '../questions/fr/dict.txt' }));
     }
 
     registerGame(title: string, game: AbstractGame) {
@@ -43,7 +45,8 @@ export class GameManager {
     }
 
     private pickGame() {
-        return this.games[Object.keys(this.games)[0]];
+        const gamesList = Object.keys(this.games);
+        return this.games[gamesList[Math.floor(gamesList.length * Math.random())]];
     }
 
     private scheduleNextGame() {
