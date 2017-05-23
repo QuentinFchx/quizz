@@ -96,14 +96,24 @@ export class Scrabble extends AbstractGame {
         }, DURATION);
     }
 
+    private longestWordsForDraw(draw: string[], n = 5) {
+        return this.trie.getSubAnagrams(draw.join('').toLowerCase())
+            .sort((a, b) => b.length - a.length)
+            .slice(0, n);
+    }
+
     private timeout() {
         this.output('Timeout!');
+        const longestWords = this.longestWordsForDraw(this.currentDraw);
+
         if (this.bestAnswer) {
             this.output(`The best answer has been given by ${this.bestAnswer.user}! (${this.bestAnswer.answer})`);
+            this.output(`Possible solutions: ${longestWords.join(', ')}`);
             this.over(this.bestAnswer.user);
         }
         else {
             this.output('Nobody found an answer! :(');
+            this.output(`Possible solutions: ${longestWords.join(', ')}`);
             this.over(null);
         }
     }
