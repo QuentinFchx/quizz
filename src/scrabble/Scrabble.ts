@@ -4,6 +4,7 @@ import * as readline from 'readline';
 
 import * as trie from 'trie-prefix-tree';
 import * as diacritics from 'diacritics';
+import { shuffle, random } from 'lodash';
 
 import { AbstractGame } from '../AbstractGame';
 
@@ -75,16 +76,16 @@ export class Scrabble extends AbstractGame {
 
     private pickLetters(n = 10) {
         const letters = [];
-        const vowelsNumber = Math.round(n / 3);
+        const vowelsNumber = Math.ceil(n / 3);
         [
             { set: VOWELS, n: vowelsNumber },
             { set: CONSONANTS, n: n - vowelsNumber }
         ].forEach(o => {
             for (let i = 0; i < o.n; i++) {
-                letters.push(o.set[Math.floor(Math.random() * o.set.length)]);
+                letters.push(o.set[random(o.set.length - 1)]);
             }
         });
-        return letters.sort(Math.random);
+        return shuffle(letters);
     }
 
     private drawLetters() {
