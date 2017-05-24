@@ -13,14 +13,18 @@ const ROOT_DIR = path.resolve(__dirname, '../');
 const VOWELS = 'AEIOUY';
 const CONSONANTS = 'BCDFGHJKLMNPQRSTVWXZ';
 
-const DURATION = 30 * 1000;
+const DURATION = 45 * 1000;
+const SOLUTIONS_DISPLAYED_NUMBER = 5;
 
 export class Scrabble extends AbstractGame {
     static title = 'Scrabble';
     static rules = 'Find the longest word with given letters';
 
     private trie = trie([]);
-    private currentDraw: string[];
+    private currentDraw: {
+        draw: string[],
+        solutions: any
+    };
     private bestAnswer: {
         user: any,
         answer: string
@@ -53,8 +57,10 @@ export class Scrabble extends AbstractGame {
     }
 
     handleMessage(word: string, user: any) {
+        if (!this.currentDraw) return;
+
         const answer = word.trim();
-        const isValidWord = this.trie.hasWord(diacritics.remove(answer));
+        const isValidWord = this.currentDraw.solutions.hasWord(diacritics.remove(answer));
         if (isValidWord) {
             if (!this.bestAnswer || this.bestAnswer.answer.length < answer.length) {
                 this.output(`${user} has now the best answer:   ${answer}`);
@@ -89,22 +95,21 @@ export class Scrabble extends AbstractGame {
     }
 
     private drawLetters() {
-        this.currentDraw = this.pickLetters();
-        this.output(`Find the longest word containing the following letters: ${this.currentDraw.join(', ')}`);
+        const draw = this.pickLetters();
+        const solutions = trie(this.trie.getSubAnagrams(draw.join('').toLowerCase()));
+        this.currentDraw = { draw, solutions };
+
+        this.output(`Find the longest word containing the following letters: ${this.currentDraw.draw.join(', ')}`);
         this.to = setTimeout(() => {
             this.timeout();
         }, DURATION);
     }
 
-    private longestWordsForDraw(draw: string[], n = 5) {
-        return this.trie.getSubAnagrams(draw.join('').toLowerCase())
-            .sort((a, b) => b.length - a.length)
-            .slice(0, n);
-    }
-
     private timeout() {
         this.output('Timeout!');
-        const longestWords = this.longestWordsForDraw(this.currentDraw);
+        const longestWords = this.currentDraw.solutions.getWords()
+            .sort((a, b) => b.length - a.length)
+            .slice(0, SOLUTIONS_DISPLAYED_NUMBER);
 
         if (this.bestAnswer) {
             this.output(`The best answer has been given by ${this.bestAnswer.user}! (${this.bestAnswer.answer})`);

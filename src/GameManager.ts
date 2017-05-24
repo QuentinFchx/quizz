@@ -41,6 +41,10 @@ export class GameManager {
     }
 
     stop() {
+        this.stopCurrentGame();
+    }
+
+    private stopCurrentGame() {
         if (this.currentGame) {
             this.currentGame.stop();
             this.currentGame = null;
@@ -72,7 +76,7 @@ export class GameManager {
             over = true;
 
             if (user) this.reward(user, 10);
-            game.stop();
+            this.stopCurrentGame();
             this.scheduleNextGame();
         });
 
