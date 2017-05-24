@@ -47,6 +47,10 @@ export class Scrabble extends AbstractGame {
             const word = diacritics.remove(line.trim());
             this.trie.addWord(word);
         });
+
+        rl.on('close', () => {
+            this.ready = true;
+        });
     }
 
     start(output: (text: string) => void, over: () => void) {

@@ -27,6 +27,7 @@ export class Quizz extends AbstractGame {
     constructor(options: QuizzParams) {
         super();
         this.questions = Quizz.loadQuestions(options.questionsFile);
+        this.ready = true;
     }
 
     start(output: (text: string) => void, over: () => void) {

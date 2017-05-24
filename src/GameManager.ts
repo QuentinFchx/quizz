@@ -52,7 +52,8 @@ export class GameManager {
     }
 
     private pickGame() {
-        const gamesList = Object.keys(this.games);
+        const gamesList = Object.keys(this.games)
+            .filter(title => this.games[title].ready);
         return this.games[gamesList[random(gamesList.length - 1)]];
     }
 
@@ -69,6 +70,12 @@ export class GameManager {
 
     private nextGame() {
         const game = this.currentGame = this.pickGame();
+        if (!game) {
+            setTimeout(() => {
+                this.nextGame();
+            }, PAUSE_DELAY);
+            return;
+        }
 
         let over = false;
         game.start(this.output, (user: any) => {
