@@ -7,7 +7,6 @@
 # Commands:
 #   hubot qstart - Start the quizz
 #   hubot qstop - Stop the quizz
-#   hubot qscore - Print top 3
 #
 # Author:
 #   QuentinFchx
@@ -35,9 +34,6 @@ module.exports = (robot) ->
         if quizz
             quizz.stop();
             quizz = null
-
-    robot.respond /qscore$/i, (msg) ->
-        if quizz then quizz.displayTop 3
 
     robot.hear /(.*)/i, (msg) ->
         if quizz then quizz.handleMessage(msg.match[1], msg.message.user.name)

@@ -8,6 +8,7 @@ import { Scrabble } from './scrabble/Scrabble';
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
 const PAUSE_DELAY = 5000;
+const SKIP_COST = 5;
 
 export class GameManager {
     private games: { [key: string]: AbstractGame } = {};
@@ -36,6 +37,7 @@ export class GameManager {
     }
 
     handleMessage(answer: string, user: any) {
+        if (answer.startsWith('!')) this.handleSpecialCommand(answer.substr(1), user);
         if (this.gamesWithoutActivity) this.gamesWithoutActivity = 0;
         if (this.currentGame) this.currentGame.handleMessage(answer, user);
     }
@@ -88,6 +90,33 @@ export class GameManager {
         });
 
         this.gamesWithoutActivity += 1;
+    }
+
+    // SPECIAL COMMANDS
+
+    private handleSpecialCommand(command: string, user: any) {
+        switch (command) {
+            case 'skip':
+                this.skipGame(user);
+                break;
+            case 'score':
+                this.displayTop();
+                break;
+        }
+    }
+
+    // SKIP GAMES
+
+    private skipGame(user: any) {
+        if (this.scores[user] < SKIP_COST) {
+            this.output(`You don't have enough points (${SKIP_COST}) to skip a game`);
+            return;
+        }
+
+        this.scores[user] -= SKIP_COST;
+        this.output('Skipping game!');
+        this.stopCurrentGame();
+        this.nextGame();
     }
 
     // SCORES
