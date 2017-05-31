@@ -9,7 +9,7 @@
   "main": "lib/GameManager.js",
   "scripts": {
     "build": "tsc",
-    "prepublish": "tsc",
+    "prepare": "tsc",
     "test": "mocha -r ts-node/register test/*.ts test/**/*.ts"
   },
   "dependencies": {
