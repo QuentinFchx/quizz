@@ -14,6 +14,7 @@ export class GameManager {
     private games: { [key: string]: AbstractGame } = {};
     private currentGame: AbstractGame;
     private gamesWithoutActivity = 0;
+    private ngTo: NodeJS.Timer;
 
     constructor(
         private output: (text: string) => void = (text: string) => { console.log(text); },
@@ -33,6 +34,7 @@ export class GameManager {
 
     start() {
         if (this.currentGame) throw new Error('Already started!');
+        this.output('Starting Quizz! Get ready!');
         this.nextGame();
     }
 
@@ -43,11 +45,18 @@ export class GameManager {
     }
 
     stop() {
+        this.clearTimers();
         this.stopCurrentGame();
+    }
+
+    private clearTimers() {
+        clearTimeout(this.ngTo);
+        delete this.ngTo;
     }
 
     private stopCurrentGame() {
         if (this.currentGame) {
+            this.output('Thank you for playing!');
             this.currentGame.stop();
             this.currentGame = null;
         }
@@ -65,7 +74,7 @@ export class GameManager {
             return;
         }
 
-        setTimeout(() => {
+        this.ngTo = setTimeout(() => {
             this.nextGame();
         }, PAUSE_DELAY);
     }
@@ -73,7 +82,7 @@ export class GameManager {
     private nextGame() {
         const game = this.currentGame = this.pickGame();
         if (!game) {
-            setTimeout(() => {
+            this.ngTo = setTimeout(() => {
                 this.nextGame();
             }, PAUSE_DELAY);
             return;
@@ -100,6 +109,9 @@ export class GameManager {
                 this.skipGame(user);
                 break;
             case 'score':
+                this.output(`${user} has ${this.scores[user]} points.`);
+                break;
+            case 'scores':
                 this.displayTop();
                 break;
         }
@@ -108,6 +120,11 @@ export class GameManager {
     // SKIP GAMES
 
     private skipGame(user: any) {
+        if (!this.currentGame) {
+            this.output('Wait for the next game!');
+            return;
+        }
+
         if (this.scores[user] < SKIP_COST) {
             this.output(`You don't have enough points (${SKIP_COST}) to skip a game`);
             return;
