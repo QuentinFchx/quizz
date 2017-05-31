@@ -4,6 +4,7 @@ import { AbstractGame } from './AbstractGame';
 
 import { Quizz } from './trivia/Quizz';
 import { Scrabble } from './scrabble/Scrabble';
+import { Reverse } from './reverse/Reverse';
 
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
@@ -22,6 +23,7 @@ export class GameManager {
     ) {
         this.registerGame(Quizz.title, new Quizz({ questionsFile: '../questions/fr/database.txt' }));
         this.registerGame(Scrabble.title, new Scrabble({ dictFile: '../questions/fr/dict.txt' }));
+        this.registerGame(Reverse.title, new Reverse({ dictFile: '../questions/fr/dict.txt' }));
     }
 
     registerGame(title: string, game: AbstractGame) {
