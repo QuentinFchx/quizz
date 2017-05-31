@@ -4,14 +4,12 @@ import * as readline from 'readline';
 
 import * as trie from 'trie-prefix-tree';
 import * as diacritics from 'diacritics';
-import { shuffle, random } from 'lodash';
+import { shuffle } from 'lodash';
 
 import { AbstractGame } from '../AbstractGame';
+import pickRandomLetter from './RandomLetter';
 
 const ROOT_DIR = path.resolve(__dirname, '../');
-
-const VOWELS = 'AEIOUY';
-const CONSONANTS = 'BCDFGHJKLMNPQRSTVWXZ';
 
 const DURATION = 45 * 1000;
 const SOLUTIONS_DISPLAYED_NUMBER = 5;
@@ -85,16 +83,10 @@ export class Scrabble extends AbstractGame {
     }
 
     private pickLetters(n = 10) {
-        const letters = [];
-        const vowelsNumber = Math.ceil(n / 3);
-        [
-            { set: VOWELS, n: vowelsNumber },
-            { set: CONSONANTS, n: n - vowelsNumber }
-        ].forEach(o => {
-            for (let i = 0; i < o.n; i++) {
-                letters.push(o.set[random(o.set.length - 1)]);
-            }
-        });
+        const letters: string[] = [];
+        for (let i = 0; i < n; i++) {
+            letters.push(pickRandomLetter());
+        }
         return shuffle(letters);
     }
 
