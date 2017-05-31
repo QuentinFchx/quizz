@@ -12,6 +12,7 @@ import pickRandomLetter from './RandomLetter';
 const ROOT_DIR = path.resolve(__dirname, '../');
 
 const DURATION = 45 * 1000;
+const REMINDER_INTERVAL = DURATION / 3;
 const SOLUTIONS_DISPLAYED_NUMBER = 5;
 
 export class Scrabble extends AbstractGame {
@@ -21,13 +22,15 @@ export class Scrabble extends AbstractGame {
     private trie = trie([]);
     private currentDraw: {
         draw: string[],
-        solutions: any
+        solutions: any,
+        bestSolutions: string[]
     };
     private bestAnswer: {
         user: any,
         answer: string
     };
     private to: NodeJS.Timer;
+    private reminderTo: NodeJS.Timer;
 
     constructor(options: { dictFile: string }) {
         super();
@@ -67,6 +70,8 @@ export class Scrabble extends AbstractGame {
             if (!this.bestAnswer || this.bestAnswer.answer.length < answer.length) {
                 this.output(`${user} has now the best answer:   ${answer}`);
                 this.bestAnswer = { user, answer };
+
+                if (answer.length === this.currentDraw.bestSolutions[0].length) this.timeout();
             }
         }
     }
@@ -80,6 +85,8 @@ export class Scrabble extends AbstractGame {
     private clearTimers() {
         clearTimeout(this.to);
         delete this.to;
+        clearInterval(this.reminderTo);
+        delete this.reminderTo;
     }
 
     private pickLetters(n = 10) {
@@ -93,28 +100,32 @@ export class Scrabble extends AbstractGame {
     private drawLetters() {
         const draw = this.pickLetters();
         const solutions = trie(this.trie.getSubAnagrams(draw.join('').toLowerCase()));
-        this.currentDraw = { draw, solutions };
+        const bestSolutions = solutions.getWords()
+            .sort((a, b) => b.length - a.length)
+            .slice(0, SOLUTIONS_DISPLAYED_NUMBER);
+
+        this.currentDraw = { draw, solutions, bestSolutions };
 
         this.output(`Find the longest word containing the following letters: ${this.currentDraw.draw.join(', ')}`);
         this.to = setTimeout(() => {
             this.timeout();
         }, DURATION);
+        this.reminderTo = setInterval(() => {
+            this.output(`The current draw is: ${this.currentDraw.draw.join(', ')}`);
+        }, REMINDER_INTERVAL);
     }
 
     private timeout() {
         this.output('Timeout!');
-        const longestWords = this.currentDraw.solutions.getWords()
-            .sort((a, b) => b.length - a.length)
-            .slice(0, SOLUTIONS_DISPLAYED_NUMBER);
 
         if (this.bestAnswer) {
             this.output(`The best answer has been given by ${this.bestAnswer.user}! (${this.bestAnswer.answer})`);
-            this.output(`Possible solutions: ${longestWords.join(', ')}`);
+            this.output(`Possible solutions: ${this.currentDraw.bestSolutions.join(', ')}`);
             this.over(this.bestAnswer.user);
         }
         else {
             this.output('Nobody found an answer! :(');
-            this.output(`Possible solutions: ${longestWords.join(', ')}`);
+            this.output(`Possible solutions: ${this.currentDraw.bestSolutions.join(', ')}`);
             this.over(null);
         }
     }
