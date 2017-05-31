@@ -8,8 +8,12 @@ Add quizz to your *package.json*.
 
 To instanciate a quizz
 
-    var Quizz = require("quizz")
-    var q = new Quizz()
+    var Manager = require("quizz").GameManager
+    var m = new Manager()
 
-    q.start()
-    q.stop()
+    m.start()
+    m.stop()
+
+## Hubot
+
+Provided with a [Hubot script!](misc/hubot-quizz.coffee)
