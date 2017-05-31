@@ -45,6 +45,7 @@ export class GameManager {
     }
 
     stop() {
+        this.output('Thank you for playing!');
         this.clearTimers();
         this.stopCurrentGame();
     }
@@ -56,7 +57,6 @@ export class GameManager {
 
     private stopCurrentGame() {
         if (this.currentGame) {
-            this.output('Thank you for playing!');
             this.currentGame.stop();
             this.currentGame = null;
         }
