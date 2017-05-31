@@ -14,7 +14,9 @@ export class Question {
     }
 
     private prepareAnswer(answer: string): string {
-        return diacritics.remove(answer).toLowerCase();
+        return (diacritics.remove(answer) as string)
+            .toLowerCase()
+            .replace(/\W/g, ' ');
     }
 
     check(answer: string): boolean {
