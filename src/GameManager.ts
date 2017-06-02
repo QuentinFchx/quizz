@@ -157,7 +157,7 @@ export class GameManager {
             .slice(0, n);
     }
 
-    displayTop(n: number = 3) {
+    private displayTop(n: number = 3) {
         const top = this.getTop(n);
         let res = `TOP ${n}`;
         top.forEach((entry, index) => {
