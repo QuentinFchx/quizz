@@ -6,6 +6,7 @@ import { Quizz } from './trivia/Quizz';
 import { Scrabble } from './scrabble/Scrabble';
 import { Reverse } from './reverse/Reverse';
 import { MentalCalc } from './mentalCalc/MentalCalc';
+import { EngQuizz } from './eng-trivia/EngQuizz';
 
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
@@ -26,6 +27,7 @@ export class GameManager {
         this.registerGame(Scrabble.title, new Scrabble({ dictFile: '../questions/fr/dict.txt' }));
         this.registerGame(Reverse.title, new Reverse({ dictFile: '../questions/fr/dict.txt' }));
         this.registerGame(MentalCalc.title, new MentalCalc());
+        this.registerGame(EngQuizz.title, new EngQuizz());
     }
 
     registerGame(title: string, game: AbstractGame) {
