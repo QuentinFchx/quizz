@@ -16,6 +16,8 @@ export class Reverse extends AbstractGame {
     static title = 'Reverse';
     static rules = 'Reverse the word as fast as possible!';
 
+    ready = false;
+
     private words: string[] = [];
     private currentWord: string;
     private to: NodeJS.Timer;

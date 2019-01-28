@@ -1,6 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
 import { AbstractGame } from '../AbstractGame';
 import { Question } from './Question';
 
@@ -8,26 +5,26 @@ const QUESTION_DELAY = 30000;
 const HINT1_DELAY = 10000;
 const HINT2_DELAY = 20000;
 
-const ROOT_DIR = path.resolve(__dirname, '../');
-
-interface QuizzParams {
-    questionsFile: string;
+export interface Picker {
+    ready: boolean;
+    pickQuestion(): Promise<Question>;
 }
 
-export class Quizz extends AbstractGame {
+export class Trivia extends AbstractGame {
     static title = 'Trivia';
     static rules = 'Answer the questions';
 
-    private questions: any[];
     private currentQuestion: Question;
     private qto: NodeJS.Timer;
     private h1to: NodeJS.Timer;
     private h2to: NodeJS.Timer;
 
-    constructor(options: QuizzParams) {
+    constructor(private picker: Picker) {
         super();
-        this.questions = Quizz.loadQuestions(options.questionsFile);
-        this.ready = true;
+    }
+
+    get ready() {
+        return this.picker.ready;
     }
 
     start(output: (text: string) => void, over: (user: any) => void) {
@@ -49,18 +46,17 @@ export class Quizz extends AbstractGame {
         delete this.currentQuestion;
     }
 
-    private pickQuestion() {
-        const randomIndex = Math.floor(Math.random() * this.questions.length);
-        const question = this.questions[randomIndex];
-        return new Question(question);
-    }
-
-    private ask() {
-        this.currentQuestion = this.pickQuestion();
-        this.output(this.currentQuestion.question);
-        this.qto = setTimeout(() => this.timeout(), QUESTION_DELAY);
-        this.h1to = setTimeout(() => this.giveHint(1), HINT1_DELAY);
-        this.h2to = setTimeout(() => this.giveHint(2), HINT2_DELAY);
+    private async ask() {
+        try {
+            this.currentQuestion = await this.picker.pickQuestion();
+            this.output(this.currentQuestion.question);
+            this.qto = setTimeout(() => this.timeout(), QUESTION_DELAY);
+            this.h1to = setTimeout(() => this.giveHint(1), HINT1_DELAY);
+            this.h2to = setTimeout(() => this.giveHint(2), HINT2_DELAY);
+        }
+        catch {
+            this.over(null);
+        }
     }
 
     private giveHint(level = 1) {
@@ -79,11 +75,5 @@ export class Quizz extends AbstractGame {
         delete this.h1to;
         clearTimeout(this.h2to);
         delete this.h2to;
-    }
-
-    static loadQuestions(filePath: string) {
-        const _filePath = path.resolve(ROOT_DIR, filePath);
-        const file = fs.readFileSync(_filePath);
-        return file.toString().split('\n');
     }
 }

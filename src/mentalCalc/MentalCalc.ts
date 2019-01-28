@@ -8,16 +8,13 @@ export class MentalCalc extends AbstractGame {
     static title = 'MentalCalc';
     static rules = 'Be the first to find the solution!';
 
+    ready = true;
+
     private currentDraw: {
         numbers: number[]
         result: number;
     };
     private to: NodeJS.Timer;
-
-    constructor() {
-        super();
-        this.ready = true;
-    }
 
     start(output: (text: string) => void, over: (user: any) => void) {
         this.output = output;

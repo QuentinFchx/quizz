@@ -8,6 +8,8 @@
             "es2016"
         ],
         "importHelpers": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "outDir": "lib",

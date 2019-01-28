@@ -1,12 +1,11 @@
 import { random } from 'lodash';
-
 import { AbstractGame } from './AbstractGame';
-
-import { Quizz } from './trivia/Quizz';
-import { Scrabble } from './scrabble/Scrabble';
-import { Reverse } from './reverse/Reverse';
 import { MentalCalc } from './mentalCalc/MentalCalc';
-
+import { Reverse } from './reverse/Reverse';
+import { Scrabble } from './scrabble/Scrabble';
+import { FilePicker } from './trivia/pickers/FilePicker';
+import { OpenTriviaDBPicker } from './trivia/pickers/OpenTriviaDBPicker';
+import { Trivia } from './trivia/Trivia';
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
 const PAUSE_DELAY = 5000;
@@ -22,9 +21,16 @@ export class GameManager {
         private output: (text: string) => void = (text: string) => { console.log(text); },
         private scores: { [key: string]: number } = {}
     ) {
-        this.registerGame(Quizz.title, new Quizz({ questionsFile: '../questions/fr/database.txt' }));
+        const filePicker = new FilePicker('../questions/fr/database.txt');
+        this.registerGame(Trivia.title + 'file', new Trivia(filePicker));
+
+        const openDBPicker = new OpenTriviaDBPicker();
+        this.registerGame(Trivia.title + 'open', new Trivia(openDBPicker));
+
         this.registerGame(Scrabble.title, new Scrabble({ dictFile: '../questions/fr/dict.txt' }));
+
         this.registerGame(Reverse.title, new Reverse({ dictFile: '../questions/fr/dict.txt' }));
+
         this.registerGame(MentalCalc.title, new MentalCalc());
     }
 

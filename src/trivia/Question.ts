@@ -4,12 +4,9 @@ const LETTER_REGEXP = /\w/g;
 const HIDE_PERCENT = 2 / 3;
 
 export class Question {
-    question: string;
-    answer: string;
     private _answer: string;
 
-    constructor(text: string) {
-        [this.question, this.answer] = text.split(' \\ ');
+    constructor(public question: string, public answer: string) {
         this._answer = this.prepareAnswer(this.answer);
     }
 
