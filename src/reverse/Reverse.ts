@@ -42,7 +42,7 @@ export class Reverse extends AbstractGame {
         });
     }
 
-    start(output: (text: string) => void, over: () => void) {
+    start(output: (text: string) => void, over: (user: any) => void) {
         this.output = output;
         this.over = over;
 
