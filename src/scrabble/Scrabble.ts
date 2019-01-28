@@ -19,6 +19,8 @@ export class Scrabble extends AbstractGame {
     static title = 'Scrabble';
     static rules = 'Find the longest word with given letters';
 
+    ready = false;
+
     private trie = trie([]);
     private currentDraw: {
         draw: string[],
