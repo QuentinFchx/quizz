@@ -33,10 +33,8 @@ export class OpenTriviaDBPicker implements Picker {
         const entry = res.data.results[0];
         const sanitizedQuestion = he.decode(entry.question);
         const question = `[${entry.category} - ${entry.difficulty}] ${sanitizedQuestion}`;
-        return new Question(
-            question,
-            entry.correct_answer
-        );
+        const sanitizedAnswer = he.decode(entry.correct_answer);
+        return new Question(question, sanitizedAnswer);
     }
 
     private async getToken() {
