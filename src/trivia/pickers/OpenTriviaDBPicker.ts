@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as he from 'he';
 import { Question } from "../Question";
 import { Picker } from '../Trivia';
 
@@ -28,7 +29,10 @@ export class OpenTriviaDBPicker implements Picker {
     async pickQuestion() {
         const res = await this.client.get<{results: OpenTriviaDbResult[]}>(`api.php?amount=1&token=${this.token}`);
         const entry = res.data.results[0];
-        return new Question(entry.question, entry.correct_answer);
+        return new Question(
+            he.decode(entry.question),
+            entry.correct_answer
+        );
     }
 
     private async getToken() {
