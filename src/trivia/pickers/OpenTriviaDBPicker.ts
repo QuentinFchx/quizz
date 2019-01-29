@@ -27,10 +27,14 @@ export class OpenTriviaDBPicker implements Picker {
     }
 
     async pickQuestion() {
-        const res = await this.client.get<{results: OpenTriviaDbResult[]}>(`api.php?amount=1&token=${this.token}`);
+        const res = await this.client.get<{results: OpenTriviaDbResult[]}>(
+            `api.php?amount=1&type=multiple&token=${this.token}`
+        );
         const entry = res.data.results[0];
+        const sanitizedQuestion = he.decode(entry.question);
+        const question = `[${entry.category} - ${entry.difficulty}] ${sanitizedQuestion}`;
         return new Question(
-            he.decode(entry.question),
+            question,
             entry.correct_answer
         );
     }
