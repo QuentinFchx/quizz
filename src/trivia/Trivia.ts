@@ -14,10 +14,10 @@ export class Trivia extends AbstractGame {
     static title = 'Trivia';
     static rules = 'Answer the questions';
 
-    private currentQuestion: Question;
-    private qto: NodeJS.Timer;
-    private h1to: NodeJS.Timer;
-    private h2to: NodeJS.Timer;
+    private currentQuestion: Question | null;
+    private qto: NodeJS.Timer | null;
+    private h1to: NodeJS.Timer | null;
+    private h2to: NodeJS.Timer | null;
 
     constructor(private picker: Picker) {
         super();
@@ -43,7 +43,10 @@ export class Trivia extends AbstractGame {
 
     stop() {
         this.clearTimers();
-        delete this.currentQuestion;
+        if (this.currentQuestion) {
+            this.output(`The answer was:   ${this.currentQuestion.answer}`);
+            delete this.currentQuestion;
+        }
     }
 
     private async ask() {
@@ -64,7 +67,7 @@ export class Trivia extends AbstractGame {
     }
 
     private timeout() {
-        this.output(`Timeout! The answer was:  ${this.currentQuestion.answer}`);
+        this.output(`Timeout! The answer was:   ${this.currentQuestion.answer}`);
         this.over(null);
     }
 
