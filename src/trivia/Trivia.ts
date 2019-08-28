@@ -69,6 +69,7 @@ export class Trivia extends AbstractGame {
 
     private timeout() {
         this.output(`Timeout! The answer was:   ${this.currentQuestion.answer}`);
+        delete this.currentQuestion;
         this.over(null);
     }
 
