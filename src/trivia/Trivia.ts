@@ -37,6 +37,7 @@ export class Trivia extends AbstractGame {
     handleMessage(answer: string, user: any) {
         if (this.currentQuestion && this.currentQuestion.check(answer)) {
             this.output(`${user} found the answer:   ${this.currentQuestion.answer}`);
+            delete this.currentQuestion;
             this.over(user);
         }
     }
