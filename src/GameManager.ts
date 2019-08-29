@@ -5,6 +5,7 @@ import { Reverse } from './reverse/Reverse';
 import { Scrabble } from './scrabble/Scrabble';
 import { FilePicker } from './trivia/pickers/FilePicker';
 import { OpenTriviaDBPicker } from './trivia/pickers/OpenTriviaDBPicker';
+import { OpenQuizzDBPicker } from './trivia/pickers/OpenQuizzDBPicker';
 import { Trivia } from './trivia/Trivia';
 
 const MAX_GAMES_WITHOUT_ACTIVITY = 3;
@@ -26,6 +27,9 @@ export class GameManager {
 
         const openDBPicker = new OpenTriviaDBPicker();
         this.registerGame(Trivia.title + 'open', new Trivia(openDBPicker));
+
+        const openQuizzPicker = new OpenQuizzDBPicker();
+        this.registerGame(Trivia.title + 'openQ', new Trivia(openQuizzPicker));
 
         this.registerGame(Scrabble.title, new Scrabble({ dictFile: '../questions/fr/dict.txt' }));
 
@@ -55,9 +59,9 @@ export class GameManager {
     }
 
     stop() {
-        this.output('Thank you for playing!');
         this.clearTimers();
         this.stopCurrentGame();
+        this.output('Thank you for playing!');
     }
 
     private clearTimers() {
