@@ -42,10 +42,10 @@ export class OpenQuizzDBPicker implements Picker {
     }
 
     private isOnclickRightAnswer(onclick: string): boolean {
-        // AfficherReponse(bonus,joueur,numero,section,niveau,wiki)
-        // AfficherReponse('20','1','1',4,'1','wiki')
+        // AfficherReponse(challenge,bonus,joueur,numero,section,niveau,wiki)
+        // AfficherReponse('0','20','1','1',4,'1','wiki')
         const re = /AfficherReponse\((.*?)\);/;
         const cbargs = re.exec(onclick)[1].split(",");
-        return cbargs[2] === `'${cbargs[3]}'`;
+        return cbargs[3] === `'${cbargs[4]}'`;
     }
 }
