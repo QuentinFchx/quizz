@@ -6,7 +6,7 @@ describe('Question', function () {
     let question: Question;
 
     beforeEach(function () {
-        question = new Question('question? \\ answer');
+        question = new Question('question?', 'answer');
     });
 
     describe('#hint', function () {
@@ -28,8 +28,8 @@ describe('Question', function () {
         });
 
         it('should return false if the answer is wrong', function () {
-            expect(question.check('answerr')).to.be.false;
-            expect(question.check('onswer')).to.be.false;
+            expect(question.check('foo')).to.be.false;
+            expect(question.check('bar')).to.be.false;
         });
     });
 });

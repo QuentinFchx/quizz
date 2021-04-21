@@ -12,7 +12,7 @@ describe("GameManager", function () {
     let spy: sinon.SinonSpyStatic;
 
     beforeEach(function () {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox()
         spy = sandbox.spy();
         manager = new GameManager(spy, { foo: 30, bar: 20, baz: 10 });
     });
@@ -30,7 +30,7 @@ describe("GameManager", function () {
 
     describe('#displayTop', function () {
         it('should print the top3', function () {
-            manager.displayTop(3);
+            (manager as any).displayTop(3);
             const expected = "TOP 3\n1. foo:  30\n2. bar:  20\n3. baz:  10";
             expect(spy).to.have.been.calledWith(expected);
         });

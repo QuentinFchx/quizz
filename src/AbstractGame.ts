@@ -1,7 +1,7 @@
 export abstract class AbstractGame {
     static title: string;
     static rules: string;
-    ready: boolean;
+    abstract get ready(): boolean;
 
     protected output: (text: string) => void;
     protected over: (user: any) => void;
