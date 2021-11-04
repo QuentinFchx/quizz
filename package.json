@@ -14,31 +14,31 @@
     "test": "mocha -r ts-node/register test/*.ts test/**/*.ts"
   },
   "dependencies": {
-    "@types/cheerio": "^0.22.13",
-    "@types/he": "^1.1.0",
-    "@types/lodash": "^4.14.121",
-    "axios": "^0.21.1",
+    "@types/cheerio": "^0.22.30",
+    "@types/he": "^1.1.2",
+    "@types/lodash": "^4.14.176",
+    "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.3",
     "diacritics": "^1.3.0",
     "he": "^1.2.0",
     "js-levenshtein": "^1.1.6",
     "lodash": "^4.17.11",
     "trie-prefix-tree": "^1.5.1",
-    "tslib": "^2.2.0"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^14.14.41",
-    "@types/sinon": "^10.0.0",
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.11.6",
+    "@types/sinon": "^10.0.6",
     "@types/sinon-chai": "^3.2.2",
     "chai": "^4.2.0",
-    "mocha": "^8.3.2",
-    "sinon": "^10.0.0",
-    "sinon-chai": "^3.3.0",
-    "ts-node": "^9.1.1",
+    "mocha": "^9.1.3",
+    "sinon": "^12.0.0",
+    "sinon-chai": "^3.7.0",
+    "ts-node": "^10.4.0",
     "tslint": "^6.1.3",
-    "typescript": "^4.2.4"
+    "typescript": "^4.4.4"
   },
   "engines": {
     "node": ">= 8"
