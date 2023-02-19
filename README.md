@@ -2,7 +2,7 @@
 
 ## Install
 
-Add quizz to your *package.json*.
+Add quizz to your _package.json_.
 
     npm install --save quizz
 

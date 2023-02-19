@@ -23,13 +23,13 @@ export class Scrabble extends AbstractGame {
 
     private trie = trie([]);
     private currentDraw: {
-        draw: string[],
-        solutions: any,
-        bestSolutions: string[]
+        draw: string[];
+        solutions: any;
+        bestSolutions: string[];
     };
     private bestAnswer: {
-        user: any,
-        answer: string
+        user: any;
+        answer: string;
     };
     private to: NodeJS.Timer;
     private reminderTo: NodeJS.Timer;
@@ -43,7 +43,7 @@ export class Scrabble extends AbstractGame {
         const filePath = path.resolve(ROOT_DIR, dictFile);
 
         const rl = readline.createInterface({
-            input: fs.createReadStream(filePath)
+            input: fs.createReadStream(filePath),
         });
 
         rl.on('line', (line) => {
@@ -102,7 +102,8 @@ export class Scrabble extends AbstractGame {
     private drawLetters() {
         const draw = this.pickLetters();
         const solutions = trie(this.trie.getSubAnagrams(draw.join('').toLowerCase()));
-        const bestSolutions = solutions.getWords()
+        const bestSolutions = solutions
+            .getWords()
             .sort((a, b) => b.length - a.length)
             .slice(0, SOLUTIONS_DISPLAYED_NUMBER);
 
@@ -124,8 +125,7 @@ export class Scrabble extends AbstractGame {
             this.output(`The best answer has been given by ${this.bestAnswer.user}! (${this.bestAnswer.answer})`);
             this.output(`Possible solutions: ${this.currentDraw.bestSolutions.join(', ')}`);
             this.over(this.bestAnswer.user);
-        }
-        else {
+        } else {
             this.output('Nobody found an answer! :(');
             this.output(`Possible solutions: ${this.currentDraw.bestSolutions.join(', ')}`);
             this.over(null);

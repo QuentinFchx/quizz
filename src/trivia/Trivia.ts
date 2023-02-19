@@ -15,9 +15,9 @@ export class Trivia extends AbstractGame {
     static rules = 'Answer the questions';
 
     private currentQuestion: Question | null;
-    private qto: NodeJS.Timer | null;
-    private h1to: NodeJS.Timer | null;
-    private h2to: NodeJS.Timer | null;
+    private qto: NodeJS.Timer | null;
+    private h1to: NodeJS.Timer | null;
+    private h2to: NodeJS.Timer | null;
 
     constructor(private picker: Picker) {
         super();
@@ -57,8 +57,7 @@ export class Trivia extends AbstractGame {
             this.qto = setTimeout(() => this.timeout(), QUESTION_DELAY);
             this.h1to = setTimeout(() => this.giveHint(1), HINT1_DELAY);
             this.h2to = setTimeout(() => this.giveHint(2), HINT2_DELAY);
-        }
-        catch {
+        } catch {
             this.over(null);
         }
     }

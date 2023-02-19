@@ -4,7 +4,7 @@ import { FilePicker } from '../../../src/trivia/pickers/FilePicker';
 
 const QUESTIONS_FILE = '../questions/fr/database.txt';
 
-describe("FilePicker", function () {
+describe('FilePicker', function () {
     let filePicker: FilePicker;
 
     beforeEach(function () {

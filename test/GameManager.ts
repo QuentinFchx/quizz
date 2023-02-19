@@ -1,18 +1,18 @@
 import { expect, use } from 'chai';
-import * as sinon from 'sinon'
+import * as sinon from 'sinon';
 import * as sinonChai from 'sinon-chai';
 
-import { GameManager } from '../src/GameManager'
+import { GameManager } from '../src/GameManager';
 
 use(sinonChai);
 
-describe("GameManager", function () {
+describe('GameManager', function () {
     let manager: GameManager;
     let sandbox: sinon.SinonSandbox;
     let spy: sinon.SinonSpyStatic;
 
     beforeEach(function () {
-        sandbox = sinon.createSandbox()
+        sandbox = sinon.createSandbox();
         spy = sandbox.spy();
         manager = new GameManager(spy, { foo: 30, bar: 20, baz: 10 });
     });
@@ -31,7 +31,7 @@ describe("GameManager", function () {
     describe('#displayTop', function () {
         it('should print the top3', function () {
             (manager as any).displayTop(3);
-            const expected = "TOP 3\n1. foo:  30\n2. bar:  20\n3. baz:  10";
+            const expected = 'TOP 3\n1. foo:  30\n2. bar:  20\n3. baz:  10';
             expect(spy).to.have.been.calledWith(expected);
         });
     });

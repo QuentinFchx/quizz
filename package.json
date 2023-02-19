@@ -11,7 +11,9 @@
     "build": "tsc",
     "prepare": "tsc",
     "lint": "tslint --project tsconfig.json",
-    "test": "mocha -r ts-node/register test/*.ts test/**/*.ts"
+    "test": "mocha -r ts-node/register test/*.ts test/**/*.ts",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "dependencies": {
     "@types/cheerio": "^0.22.30",
@@ -34,6 +36,7 @@
     "@types/sinon-chai": "^3.2.2",
     "chai": "^4.2.0",
     "mocha": "^9.1.3",
+    "prettier": "^2.8.4",
     "sinon": "^12.0.0",
     "sinon-chai": "^3.7.0",
     "ts-node": "^10.4.0",

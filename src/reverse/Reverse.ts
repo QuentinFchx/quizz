@@ -31,7 +31,7 @@ export class Reverse extends AbstractGame {
         const filePath = path.resolve(ROOT_DIR, dictFile);
 
         const rl = readline.createInterface({
-            input: fs.createReadStream(filePath)
+            input: fs.createReadStream(filePath),
         });
 
         rl.on('line', (line) => {

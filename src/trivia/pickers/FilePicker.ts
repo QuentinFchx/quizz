@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { Question } from "../Question";
+import { Question } from '../Question';
 import { Picker } from '../Trivia';
 
 const ROOT_DIR = path.resolve(__dirname, '../../');

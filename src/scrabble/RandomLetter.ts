@@ -24,22 +24,22 @@ const LETTERS_FREQUENCIES: { [key: string]: number } = {
     V: 1.32,
     W: 0.04,
     X: 0.45,
-    Y: 0.30,
+    Y: 0.3,
     Z: 0.12,
 };
 const SET = buildFrequenciesSet(LETTERS_FREQUENCIES);
 
 export default function (): string {
     const random = Math.random() * 100;
-    return SET.find(item => random < item[1])[0];
+    return SET.find((item) => random < item[1])[0];
 }
 
 function buildFrequenciesSet(frequencies: { [key: string]: number }) {
     let acc = 0;
     const set: [string, number][] = [];
-    Object.keys(frequencies).forEach(letter => {
+    Object.keys(frequencies).forEach((letter) => {
         const freq = frequencies[letter];
-        set.push([letter, acc = acc + freq]);
+        set.push([letter, (acc = acc + freq)]);
     });
     if (set[set.length - 1][1] !== 100) throw 'Set is not normalized!';
     return set;

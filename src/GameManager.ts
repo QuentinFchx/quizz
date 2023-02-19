@@ -19,7 +19,9 @@ export class GameManager {
     private ngTo: NodeJS.Timer;
 
     constructor(
-        private output: (text: string) => void = (text: string) => { console.log(text); },
+        private output: (text: string) => void = (text: string) => {
+            console.log(text);
+        },
         private scores: { [key: string]: number } = {}
     ) {
         const filePicker = new FilePicker('../questions/fr/database.txt');
@@ -77,8 +79,7 @@ export class GameManager {
     }
 
     private pickGame() {
-        const gamesList = Object.keys(this.games)
-            .filter(title => this.games[title].ready);
+        const gamesList = Object.keys(this.games).filter((title) => this.games[title].ready);
         return this.games[gamesList[random(gamesList.length - 1)]];
     }
 
@@ -94,7 +95,7 @@ export class GameManager {
     }
 
     private nextGame() {
-        const game = this.currentGame = this.pickGame();
+        const game = (this.currentGame = this.pickGame());
         if (!game) {
             this.ngTo = setTimeout(() => {
                 this.nextGame();
@@ -159,10 +160,10 @@ export class GameManager {
 
     private getTop(n: number) {
         return Object.keys(this.scores)
-            .map(key => {
+            .map((key) => {
                 return {
                     user: key,
-                    score: this.scores[key]
+                    score: this.scores[key],
                 };
             })
             .sort((a, b) => b.score - a.score)

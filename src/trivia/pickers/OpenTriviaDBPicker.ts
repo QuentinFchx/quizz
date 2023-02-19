@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as he from 'he';
-import { Question } from "../Question";
+import { Question } from '../Question';
 import { Picker } from '../Trivia';
 
 interface OpenTriviaDbResult {
@@ -9,12 +9,12 @@ interface OpenTriviaDbResult {
     difficulty: 'easy';
     question: string;
     correct_answer: string;
-    incorrect_answers: string [];
+    incorrect_answers: string[];
 }
 
 export class OpenTriviaDBPicker implements Picker {
     private client = axios.create({
-        baseURL: 'https://opentdb.com'
+        baseURL: 'https://opentdb.com',
     });
     private token: string;
 
@@ -27,9 +27,7 @@ export class OpenTriviaDBPicker implements Picker {
     }
 
     async pickQuestion() {
-        const res = await this.client.get<{results: OpenTriviaDbResult[]}>(
-            `api.php?amount=1&type=multiple&token=${this.token}`
-        );
+        const res = await this.client.get<{ results: OpenTriviaDbResult[] }>(`api.php?amount=1&type=multiple&token=${this.token}`);
         const entry = res.data.results[0];
         const sanitizedQuestion = he.decode(entry.question);
         const question = `[${entry.category} - ${entry.difficulty}] ${sanitizedQuestion}`;
@@ -38,7 +36,7 @@ export class OpenTriviaDBPicker implements Picker {
     }
 
     private async getToken() {
-        const res = await this.client.get<{token: string}>('api_token.php?command=request');
+        const res = await this.client.get<{ token: string }>('api_token.php?command=request');
         this.token = res.data.token;
     }
 }

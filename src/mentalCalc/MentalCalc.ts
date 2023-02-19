@@ -11,7 +11,7 @@ export class MentalCalc extends AbstractGame {
     ready = true;
 
     private currentDraw: {
-        numbers: number[]
+        numbers: number[];
         result: number;
     };
     private to: NodeJS.Timer;
@@ -51,7 +51,7 @@ export class MentalCalc extends AbstractGame {
         }
         this.currentDraw = {
             numbers,
-            result: numbers.reduce((sum, b) => sum + b)
+            result: numbers.reduce((sum, b) => sum + b),
         };
 
         this.output(`Solve the following:    ${numbers.join(' + ')}`);

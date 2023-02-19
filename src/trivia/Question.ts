@@ -1,7 +1,6 @@
 import * as diacritics from 'diacritics';
 import * as levenshtein from 'js-levenshtein';
 
-
 const LETTER_REGEXP = /\w/g;
 const HIDE_PERCENT = 2 / 3;
 
@@ -16,10 +15,7 @@ export class Question {
     }
 
     private prepareAnswer(answer: string): string {
-        return (diacritics.remove(answer) as string)
-            .toLowerCase()
-            .trim()
-            .replace(/\W/g, ' ');
+        return (diacritics.remove(answer) as string).toLowerCase().trim().replace(/\W/g, ' ');
     }
 
     check(answer: string): boolean {
