@@ -8,7 +8,10 @@ export class Question {
     private _answer: string;
     private _maxLevenshtein: number;
 
-    constructor(public question: string, public answer: string, public hasHints = true) {
+    /**
+     * @param choices a list of choices. The first choice is the correct answer
+     */
+    constructor(public question: string, public answer: string, public choices?: string[], public hasHints = true) {
         this._answer = this.prepareAnswer(this.answer);
 
         this._maxLevenshtein = Math.floor(this._answer.length / 5);
@@ -19,6 +22,14 @@ export class Question {
     }
 
     check(answer: string): boolean {
+        // If question has choices, check if the answer provided is an index-like string and if so check the choice.
+        if (this.choices) {
+            const index = parseInt(answer, 10);
+            if (Number.isInteger(index) && this.choices[index] === this.answer) {
+                return true;
+            }
+        }
+
         const preparedAnswer = this.prepareAnswer(answer);
         return levenshtein(preparedAnswer, this._answer) <= this._maxLevenshtein;
     }
