@@ -55,8 +55,11 @@ export class Trivia extends AbstractGame {
             this.currentQuestion = await this.picker.pickQuestion();
             this.output(this.currentQuestion.question);
             this.qto = setTimeout(() => this.timeout(), QUESTION_DELAY);
-            this.h1to = setTimeout(() => this.giveHint(1), HINT1_DELAY);
-            this.h2to = setTimeout(() => this.giveHint(2), HINT2_DELAY);
+
+            if (this.currentQuestion.hasHints) {
+                this.h1to = setTimeout(() => this.giveHint(1), HINT1_DELAY);
+                this.h2to = setTimeout(() => this.giveHint(2), HINT2_DELAY);
+            }
         } catch {
             this.over(null);
         }

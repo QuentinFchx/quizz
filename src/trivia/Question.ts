@@ -8,7 +8,7 @@ export class Question {
     private _answer: string;
     private _maxLevenshtein: number;
 
-    constructor(public question: string, public answer: string) {
+    constructor(public question: string, public answer: string, public hasHints = true) {
         this._answer = this.prepareAnswer(this.answer);
 
         this._maxLevenshtein = Math.floor(this._answer.length / 5);
