@@ -1,20 +1,24 @@
 import * as diacritics from 'diacritics';
 import * as levenshtein from 'js-levenshtein';
+import { shuffle } from 'lodash';
 
 const LETTER_REGEXP = /\w/g;
 const HIDE_PERCENT = 2 / 3;
 
 export class Question {
+    public choices: string[] | undefined;
+
     private _answer: string;
     private _maxLevenshtein: number;
 
     /**
-     * @param choices a list of choices. The first choice is the correct answer
+     * @param otherChoices a list of wrong answers.
      */
-    constructor(public question: string, public answer: string, public choices?: string[], public hasHints = true) {
+    constructor(public question: string, public answer: string, private otherChoices?: string[], public hasHints = true) {
         this._answer = this.prepareAnswer(this.answer);
-
         this._maxLevenshtein = Math.floor(this._answer.length / 5);
+
+        this.choices = this.otherChoices ? shuffle([this.answer, ...this.otherChoices]) : undefined;
     }
 
     private prepareAnswer(answer: string): string {
